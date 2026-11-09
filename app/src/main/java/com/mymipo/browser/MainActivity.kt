@@ -24,7 +24,13 @@ class MainActivity : ComponentActivity() {
             settings.allowFileAccess = true
             settings.allowContentAccess = true
             webChromeClient = WebChromeClient()
-            webViewClient = WebViewClient()
+            webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    if (url?.startsWith("file:///android_asset/index.html") == true) {
+                        view?.addJavascriptInterface(BrowserBridge(), "Mymipo")
+                    }
+                }
+            }
             addJavascriptInterface(BrowserBridge(), "Mymipo")
         }
         setContentView(webView)
@@ -43,6 +49,8 @@ class MainActivity : ComponentActivity() {
             runOnUiThread {
                 val value = url.trim()
                 if (value.startsWith("https://") || value.startsWith("http://")) {
+                    // Never expose the JavaScript bridge to arbitrary websites.
+                    webView.removeJavascriptInterface("Mymipo")
                     webView.loadUrl(value)
                 } else {
                     Toast.makeText(this@MainActivity, "Неподдерживаемый адрес", Toast.LENGTH_SHORT).show()
