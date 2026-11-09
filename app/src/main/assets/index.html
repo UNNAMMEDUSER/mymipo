@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827"><title>Mymipo Browser</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#1a2940;--text:#edf4ff;--muted:#94a7c2;--accent:#7c9cff;--accent2:#9a86ff;--line:#263752;--radius:22px;font-family:Inter,system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#263b67 0,transparent 48%),var(--bg);color:var(--text);min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:0;color:inherit}.app{max-width:760px;margin:auto;min-height:100vh;padding:calc(14px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;margin:6px 2px 30px}.brand{display:flex;align-items:center;gap:10px;font-weight:850;font-size:21px;letter-spacing:-.7px}.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#071020;font-weight:900}
+.icon-btn{width:42px;height:42px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-size:18px}.hero{padding:28px 2px 24px}.eyebrow{color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:800}.hero h1{font-size:clamp(38px,10vw,58px);line-height:1;margin:12px 0;letter-spacing:-2.5px}.hero p{color:var(--muted);margin:0 0 24px}
+.search{display:flex;gap:8px;padding:7px;background:var(--panel);border:1px solid var(--line);border-radius:19px;box-shadow:0 14px 38px #0003}.search input{min-width:0;flex:1;background:transparent;border:0;outline:0;color:var(--text);padding:12px;font-size:15px}.search button,.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#081326;font-weight:800;border-radius:14px;padding:0 18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:26px 2px 13px}.section-head h2{font-size:15px;margin:0}.muted{color:var(--muted);font-size:12px}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.tile{display:flex;align-items:center;gap:12px;padding:15px;background:linear-gradient(145deg,var(--panel),#101a2b);border:1px solid var(--line);border-radius:18px;text-align:left}.tile-icon{width:38px;height:38px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-size:18px}.tile strong{font-size:14px}.tile small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:12px 0}.panel h3{margin:0 0 7px;font-size:16px}.panel p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+nav{position:sticky;bottom:10px;display:flex;gap:8px;margin:30px 0 0;padding:7px;background:#101a2beF;border:1px solid var(--line);border-radius:19px;backdrop-filter:blur(16px)}nav button{flex:1;background:transparent;color:var(--muted);padding:11px 5px;border-radius:13px;font-size:12px}nav button.active{background:var(--panel2);color:var(--text)}
+.view{display:none}.view.active{display:block}.field{display:grid;gap:8px;margin:16px 0}.field label{font-size:13px;color:var(--muted)}.field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:13px;color:var(--text);outline:0}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.primary{padding:12px 17px;min-height:44px}.secondary{padding:11px 14px;background:var(--panel2);border:1px solid var(--line);border-radius:13px}.danger{color:#ff9a9a}
+.tweak-list{display:grid;gap:10px;margin-top:12px}mymipo-tweak,mymipo-suggestion{display:block;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:10px 0}mymipo-tweak .tweak-title,mymipo-suggestion .suggest-title{font-weight:750;font-size:14px}mymipo-tweak p,mymipo-suggestion p{font-size:12px;color:var(--muted);line-height:1.5;margin:6px 0 12px}.tweak-actions{display:flex;align-items:center;justify-content:space-between;gap:8px}.tweak-actions button{padding:9px 12px;border-radius:11px;background:var(--panel2);font-size:12px}.tweak-actions button.apply{background:var(--accent);color:#081326;font-weight:800}.tag{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px 0 4px}
+body.light{color-scheme:light;--bg:#f3f6fc;--panel:#fff;--panel2:#e8eef9;--text:#14213a;--muted:#63738e;--line:#d8e1ef;background:linear-gradient(160deg,#e2eaff,var(--bg) 40%)}
+@media(min-width:600px){.app{padding-left:28px;padding-right:28px}.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}.tile{display:grid;justify-items:start}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><span class="logo">m</span> mymipo <span class="muted">BROWSER</span></div><button class="icon-btn" aria-label="Настройки" onclick="showView('settings')">⚙</button></header>
+<main>
+<section id="home" class="view active">
+<div class="hero"><div class="eyebrow">Твой интернет — твои правила</div><h1>Открой<br>что-то новое.</h1><p>Быстрый поиск. Чистый интерфейс. Твой стиль.</p>
+<form class="search" onsubmit="event.preventDefault();search(document.getElementById('query').value)"><input id="query" autocomplete="off" placeholder="Поиск или адрес сайта"><button type="submit" aria-label="Искать">➜</button></form></div>
+<div class="section-head"><h2>Быстрый доступ</h2><span class="muted">Избранное</span></div>
+<div class="tiles">
+<button class="tile" onclick="openSite('https://www.google.com')"><span class="tile-icon">G</span><span><strong>Google</strong><small>Поиск</small></span></button>
+<button class="tile" onclick="openSite('https://m.youtube.com')"><span class="tile-icon">▶</span><span><strong>YouTube</strong><small>Видео</small></span></button>
+<button class="tile" onclick="openSite('https://www.wikipedia.org')"><span class="tile-icon">W</span><span><strong>Wikipedia</strong><small>Знания</small></span></button>
+<button class="tile" onclick="openSite('https://github.com')"><span class="tile-icon">⌘</span><span><strong>GitHub</strong><small>Разработка</small></span></button>
+</div>
+<div class="section-head"><h2>Настрой свой браузер</h2><span class="muted">Дизайн</span></div>
+<div class="panel"><h3>Твой интерфейс — твои правила</h3><p>Открой раздел «Дизайн», чтобы применить готовые твики или добавить собственные HTML-компоненты с предложениями оформления.</p><button class="secondary" style="margin-top:14px" onclick="showView('design')">Открыть твики дизайна →</button></div>
+</section>
+<section id="settings" class="view">
+<div class="hero"><div class="eyebrow">Персонализация</div><h1>Настройки.</h1><p>Настрой Mymipo под себя.</p></div>
+<div class="panel"><h3>Поиск</h3><div class="field"><label for="engine">Поисковая система</label><select id="engine" onchange="saveSettings()"><option>Google</option><option>Bing</option><option>DuckDuckGo</option></select></div></div>
+<div class="panel"><h3>Главная страница</h3><div class="field"><label for="homepage">Адрес домашней страницы</label><input id="homepage" value="https://www.google.com"></div><button class="primary" onclick="saveSettings()">Сохранить</button></div>
+<div class="panel row"><div><h3>Светлая тема</h3><p>Переключить оформление</p></div><input id="theme" type="checkbox" onchange="toggleTheme(this.checked)" style="width:22px;height:22px;accent-color:var(--accent)"></div>
+<div class="panel"><h3>Конфиденциальность</h3><p>Очистить историю просмотров и кэш WebView.</p><button class="secondary danger" style="margin-top:13px" onclick="clearBrowserData()">Очистить данные</button></div>
+</section>
+<section id="design" class="view">
+<div class="hero"><div class="eyebrow">Mymipo design lab</div><h1>Твой стиль.</h1><p>Твики — это предложения изменить оформление. Сначала посмотри описание, затем нажми «Применить».</p></div>
+<div class="section-head"><h2>Готовые твики</h2><span class="muted">Можно отменить</span></div>
+<div class="tweak-list">
+<mymipo-tweak title="Лавандовый акцент" description="Мягкий фиолетово-синий цвет кнопок и активных элементов." property="--accent" value="#b69cff" secondary="#83a7ff"></mymipo-tweak>
+<mymipo-tweak title="Мятный акцент" description="Свежий зелёно-бирюзовый акцент для минималистичного интерфейса." property="--accent" value="#66dfbd" secondary="#9be7d4"></mymipo-tweak>
+<mymipo-tweak title="Более округлый интерфейс" description="Увеличивает скругление карточек и полей поиска." property="--radius" value="30px"></mymipo-tweak>
+<mymipo-tweak title="Компактный интерфейс" description="Уменьшает визуальную плотность отступов карточек." property="--panel" value="#101a2a"></mymipo-tweak>
+<mymipo-suggestion title="Предложить свой твик" description="Создай HTML-страницу с тегами Mymipo Design Tags и попроси ИИ предложить новый дизайн."></mymipo-suggestion>
+</div>
+<div class="panel"><div class="row"><div><h3>Сбросить оформление</h3><p>Вернуть исходную палитру и форму элементов.</p></div><button class="secondary" onclick="resetDesign()">Сбросить</button></div></div>
+</section>
+<section id="browser" class="view">
+<div class="hero"><div class="eyebrow">Веб-просмотр</div><h1>Открыть сайт.</h1><p>Введи адрес или поисковый запрос.</p><form class="search" onsubmit="event.preventDefault();search(document.getElementById('browser-query').value)"><input id="browser-query" placeholder="https://example.com"><button>➜</button></form></div>
+<div class="panel"><h3>Навигация</h3><div class="row" style="margin-top:12px"><button class="secondary" onclick="nativeCall('goBack')">← Назад</button><button class="secondary" onclick="nativeCall('reload')">↻ Обновить</button><button class="secondary" onclick="showView('home')">⌂ Домой</button></div></div>
+</section>
+</main>
+<nav aria-label="Основная навигация"><button class="active" data-view="home" onclick="showView('home')">⌂<br>Главная</button><button data-view="browser" onclick="showView('browser')">◎<br>Браузер</button><button data-view="design" onclick="showView('design')">✦<br>Дизайн</button><button data-view="settings" onclick="showView('settings')">⚙<br>Настройки</button></nav>
+<footer>Mymipo Browser · интерфейс на HTML, CSS и JavaScript</footer>
+</div>
+<script>
+const defaults={engine:'Google',homepage:'https://www.google.com',theme:false};
+function nativeCall(name,...args){if(window.Mymipo&&typeof window.Mymipo[name]==='function')return window.Mymipo[name](...args);return null}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));}
+function search(value){let q=(value||'').trim();if(!q)return;let url;if(/^https?:\/\//i.test(q))url=q;else if(/^[\w-]+(\.[\w-]+)+(\/.*)?$/.test(q))url='https://'+q;else{let engine=document.getElementById('engine')?.value||localStorage.getItem('mymipo-engine')||'Google';let base=engine==='Bing'?'https://www.bing.com/search?q=':engine==='DuckDuckGo'?'https://duckduckgo.com/?q=':'https://www.google.com/search?q=';url=base+encodeURIComponent(q)}openSite(url)}
+function openSite(url){nativeCall('openUrl',url);showView('browser')}
+function saveSettings(){let engine=document.getElementById('engine').value;let homepage=document.getElementById('homepage').value.trim()||defaults.homepage;localStorage.setItem('mymipo-engine',engine);localStorage.setItem('mymipo-homepage',homepage);nativeCall('setHomePage',homepage);nativeCall('setSearchEngine',engine)}
+function toggleTheme(light){document.body.classList.toggle('light',light);localStorage.setItem('mymipo-light',String(light))}
+function clearBrowserData(){nativeCall('clearData');alert('Команда очистки данных отправлена браузеру.')}
+function resetDesign(){document.documentElement.style.setProperty('--accent','#7c9cff');document.documentElement.style.setProperty('--accent2','#9a86ff');document.documentElement.style.setProperty('--radius','22px');document.documentElement.style.setProperty('--panel','#121d30')}
+class MymipoTweak extends HTMLElement{
+ connectedCallback(){if(this.dataset.ready)return;this.dataset.ready='1';let title=this.getAttribute('title')||'Твик дизайна';let desc=this.getAttribute('description')||'Изменение интерфейса';let prop=this.getAttribute('property')||'--accent';let value=this.getAttribute('value')||'#7c9cff';let secondary=this.getAttribute('secondary');let allowed=['--accent','--accent2','--radius','--panel'];let valid=allowed.includes(prop)&&(/^#[0-9a-f]{3,8}$/i.test(value)||/^\d{1,2}px$/.test(value));this.innerHTML='<div class="tag">Предложение оформления</div><div class="tweak-title"></div><p></p><div class="tweak-actions"><span class="muted"></span><button class="apply" type="button">Применить твик</button></div>';this.querySelector('.tweak-title').textContent=title;this.querySelector('p').textContent=desc;this.querySelector('.muted').textContent=prop+' : '+value;this.querySelector('button').addEventListener('click',()=>{if(!valid)return;document.documentElement.style.setProperty(prop,value);if(secondary&&/^#[0-9a-f]{3,8}$/i.test(secondary))document.documentElement.style.setProperty('--accent2',secondary);this.querySelector('button').textContent='Применено ✓';this.dispatchEvent(new CustomEvent('mymipo-tweak-applied',{bubbles:true,detail:{property:prop,value}}))})}
+}
+class MymipoSuggestion extends HTMLElement{connectedCallback(){if(this.dataset.ready)return;this.dataset.ready='1';let title=this.getAttribute('title')||'Идея';let desc=this.getAttribute('description')||'';this.innerHTML='<div class="tag">Идея для дизайна</div><div class="suggest-title"></div><p></p><div class="tweak-actions"><span class="muted">Нужна генерация</span><button type="button">Скопировать запрос</button></div>';this.querySelector('.suggest-title').textContent=title;this.querySelector('p').textContent=desc;this.querySelector('button').addEventListener('click',()=>{let prompt='Предложи новый визуальный твик для Mymipo Browser с использованием кастомных тегов Mymipo Design Tags. Верни готовый HTML-фрагмент и кратко объясни его.';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(prompt).then(()=>this.querySelector('button').textContent='Скопировано ✓');else this.querySelector('button').textContent='Скопируй промпт из документации'})}}
+customElements.define('mymipo-tweak',MymipoTweak);customElements.define('mymipo-suggestion',MymipoSuggestion);
+(function init(){let e=localStorage.getItem('mymipo-engine')||defaults.engine;let h=localStorage.getItem('mymipo-homepage')||defaults.homepage;let light=localStorage.getItem('mymipo-light')==='true';document.getElementById('engine').value=e;document.getElementById('homepage').value=h;document.getElementById('theme').checked=light;toggleTheme(light)})();
+</script>
+</body></html>
